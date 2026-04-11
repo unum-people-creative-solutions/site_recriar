@@ -14,7 +14,7 @@ export function Hero() {
                     Saúde Mental & Alta Performance
                   </span>
 
-                  <h1 className="font-serif text-5xl md:text-6xl lg:text-7xl leading-tight text-deepnavy">
+                  <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-tight text-deepnavy break-words">
                     Excelência em Neuropsicologia e Confidencialidade absoluta.
                   </h1>
           
