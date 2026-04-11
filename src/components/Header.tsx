@@ -10,7 +10,12 @@ export function Header() {
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 100);
+      // Histerese: Limites diferentes para descer e subir, evitando o "efeito sanfona"
+      if (window.scrollY > 150) {
+        setIsScrolled(true);
+      } else if (window.scrollY < 50) {
+        setIsScrolled(false);
+      }
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
