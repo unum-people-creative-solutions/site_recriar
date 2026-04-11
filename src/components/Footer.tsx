@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 
 const InstagramIcon = ({ className }: { className?: string }) => (
@@ -39,9 +40,15 @@ export function Footer() {
       <div className="container mx-auto px-6">
         <div className="grid md:grid-cols-3 gap-12 lg:gap-24 mb-12">
           
-          <div className="flex flex-col gap-6">
-            <Link href="/" className="font-serif text-2xl tracking-wide text-white font-bold">
-              Recriar<span className="text-drygold text-3xl">.</span>
+          <div className="flex flex-col items-center text-center gap-6">
+            <Link href="/" className="inline-block">
+              <Image 
+                src="/logo.png" 
+                alt="Logo Recriar Psicologia" 
+                width={600} 
+                height={200} 
+                className="h-40 md:h-48 w-auto object-contain opacity-90"
+              />
             </Link>
             <p className="text-sm font-light leading-relaxed max-w-sm">
               Excelência em Neuropsicologia e Confidencialidade para a sua Saúde Mental.

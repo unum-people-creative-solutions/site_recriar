@@ -1,12 +1,33 @@
+"use client";
+
+import { useState, useEffect } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { Menu } from "lucide-react";
 
 export function Header() {
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
-    <header className="sticky top-0 z-50 w-full bg-offwhite/90 backdrop-blur-md border-b border-drygold/20">
-      <div className="container mx-auto px-6 h-20 flex items-center justify-between">
-        <Link href="/" className="font-serif text-2xl tracking-wide text-deepnavy font-bold">
-          Recriar<span className="text-drygold text-3xl">.</span>
+    <header className={`sticky top-0 z-50 w-full backdrop-blur-md border-b border-drygold/20 transition-all duration-300 ${isScrolled ? 'bg-offwhite/95 shadow-sm' : 'bg-offwhite/90'}`}>
+      <div className={`container mx-auto px-6 flex items-center justify-between transition-all duration-300 ${isScrolled ? 'py-2' : 'py-3 md:py-4'}`}>
+        <Link href="/" className="flex items-center">
+          <Image 
+            src="/logo.png" 
+            alt="Logo Recriar Psicologia" 
+            width={600} 
+            height={200} 
+            className={`w-auto object-contain mix-blend-multiply transition-all duration-500 ease-in-out ${isScrolled ? 'h-16 md:h-20' : 'h-32 md:h-40'}`}
+            priority
+          />
         </Link>
         
         <nav className="hidden md:flex items-center gap-8">
