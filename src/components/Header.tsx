@@ -21,6 +21,14 @@ export function Header() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const trackWhatsAppClick = () => {
+    if (typeof window !== "undefined" && (window as any).gtag) {
+      (window as any).gtag('event', 'conversion', {
+        'send_to': 'AW-18082531759/SUA_LABEL_DE_CONVERSAO_AQUI'
+      });
+    }
+  };
+
   return (
     <header className={`sticky top-0 z-50 w-full backdrop-blur-md border-b border-drygold/20 transition-all duration-300 ${isScrolled ? 'bg-offwhite/95 shadow-sm' : 'bg-offwhite/90'}`}>
       <div className={`container mx-auto px-6 flex items-center justify-between transition-all duration-300 ${isScrolled ? 'py-2' : 'py-3 md:py-4'}`}>
@@ -52,6 +60,7 @@ export function Header() {
             href="https://api.whatsapp.com/send/?phone=5541997742133&text=Ol%C3%A1%2C+gostaria+de+informa%C3%A7%C3%B5es+sobre+atendimento+na+Cl%C3%ADnica+RECRIAR&type=phone_number&app_absent=0" 
             target="_blank" 
             rel="noopener noreferrer"
+            onClick={trackWhatsAppClick}
             className="bg-deepnavy hover:bg-leadgray text-offwhite px-6 py-3 text-sm font-medium transition-colors"
           >
             Solicitar Agendamento

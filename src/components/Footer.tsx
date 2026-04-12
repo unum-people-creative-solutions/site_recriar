@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 
@@ -35,6 +37,14 @@ const WhatsAppIcon = ({ className }: { className?: string }) => (
 );
 
 export function Footer() {
+  const trackWhatsAppClick = () => {
+    if (typeof window !== "undefined" && (window as any).gtag) {
+      (window as any).gtag('event', 'conversion', {
+        'send_to': 'AW-18082531759/SUA_LABEL_DE_CONVERSAO_AQUI'
+      });
+    }
+  };
+
   return (
     <footer className="bg-leadgray text-white/60 py-12 border-t border-white/5">
       <div className="container mx-auto px-6">
@@ -61,6 +71,7 @@ export function Footer() {
               href="https://api.whatsapp.com/send/?phone=5541997742133&text=Ol%C3%A1%2C+gostaria+de+informa%C3%A7%C3%B5es+sobre+atendimento+na+Cl%C3%ADnica+RECRIAR&type=phone_number&app_absent=0" 
               target="_blank" 
               rel="noopener noreferrer"
+              onClick={trackWhatsAppClick}
               className="flex items-center gap-2 text-sm hover:text-white transition-colors"
             >
               <WhatsAppIcon className="w-4 h-4" />

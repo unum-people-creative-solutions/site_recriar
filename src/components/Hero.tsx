@@ -1,6 +1,16 @@
+"use client";
+
 import { ArrowRight } from "lucide-react";
 
 export function Hero() {
+  const trackWhatsAppClick = () => {
+    if (typeof window !== "undefined" && (window as any).gtag) {
+      (window as any).gtag('event', 'conversion', {
+        'send_to': 'AW-18082531759/SUA_LABEL_DE_CONVERSAO_AQUI'
+      });
+    }
+  };
+
   return (
     <section className="relative min-h-[90vh] flex items-center justify-center bg-offwhite overflow-hidden">
       {/* Abstract Background Elements for Premium Feel */}
@@ -27,6 +37,7 @@ export function Hero() {
               href="https://api.whatsapp.com/send/?phone=5541997742133&text=Ol%C3%A1%2C+gostaria+de+informa%C3%A7%C3%B5es+sobre+atendimento+na+Cl%C3%ADnica+RECRIAR&type=phone_number&app_absent=0" 
               target="_blank" 
               rel="noopener noreferrer"
+              onClick={trackWhatsAppClick}
               className="inline-flex items-center justify-center gap-2 bg-deepnavy hover:bg-leadgray text-offwhite px-8 py-4 text-sm uppercase tracking-wider font-medium transition-all group"
             >
               Entre em contato conosco

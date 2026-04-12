@@ -3,7 +3,7 @@ import { MapPin, Shield, VolumeX } from "lucide-react";
 
 export function Space() {
   return (
-    <section id="espaco" className="py-24 bg-offwhite">
+    <section id="espaco" className="py-24 bg-offwhite scroll-mt-28 md:scroll-mt-32">
       <div className="container mx-auto px-6 grid lg:grid-cols-2 gap-16 items-center">
         <div className="order-2 lg:order-1 relative h-[500px] w-full bg-leadgray/5">
           <Image
