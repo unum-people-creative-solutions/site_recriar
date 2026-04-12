@@ -114,7 +114,7 @@ export function Footer() {
         </div>
 
         <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs font-light">
-          <p>© {new Date().getFullYear()} Recriar Psicologia. Todos os direitos reservados.</p>
+          <p suppressHydrationWarning>© {new Date().getFullYear()} Recriar Psicologia. Todos os direitos reservados.</p>
           <p>Design de Alto Padrão</p>
         </div>
       </div>

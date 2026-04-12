@@ -5,7 +5,7 @@ export function Space() {
   return (
     <section id="espaco" className="py-24 bg-offwhite scroll-mt-28 md:scroll-mt-32">
       <div className="container mx-auto px-6 grid lg:grid-cols-2 gap-16 items-center">
-        <div className="order-2 lg:order-1 relative h-[500px] w-full bg-leadgray/5">
+        <div className="order-2 lg:order-1 relative h-[350px] sm:h-[400px] lg:h-[500px] w-[calc(100%+3rem)] -ml-6 lg:w-full lg:ml-0 bg-leadgray/5">
           <Image
             src="/sala.png"
             alt="Imagem do Consultório"
@@ -13,7 +13,7 @@ export function Space() {
             className="object-cover"
           />
           {/* Decorative element */}
-          <div className="absolute -bottom-6 -right-6 w-48 h-48 border border-drygold/40 z-[-1]"></div>
+          <div className="hidden lg:block absolute -bottom-6 -right-6 w-48 h-48 border border-drygold/40 z-[-1]"></div>
         </div>
         
         <div className="order-1 lg:order-2 flex flex-col gap-8">

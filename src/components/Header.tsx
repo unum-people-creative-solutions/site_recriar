@@ -3,10 +3,11 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Menu } from "lucide-react";
+import { Menu, X } from "lucide-react";
 
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -69,10 +70,56 @@ export function Header() {
           </a>
         </div>
 
-        <button className="md:hidden text-deepnavy p-2">
-          <Menu className="w-6 h-6" />
+        <button 
+          className="md:hidden text-deepnavy p-2"
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+        >
+          {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
         </button>
       </div>
+
+      {/* Mobile Menu */}
+      {isMobileMenuOpen && (
+        <div className="md:hidden absolute top-full left-0 w-full bg-offwhite shadow-lg border-b border-drygold/20 flex flex-col">
+          <nav className="flex flex-col text-center py-6 gap-6">
+            <Link 
+              href="#especialidades" 
+              className="text-lg font-medium text-deepnavy hover:text-drygold transition-colors"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Especialidades
+            </Link>
+            <Link 
+              href="#corpo-clinico" 
+              className="text-lg font-medium text-deepnavy hover:text-drygold transition-colors"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Corpo Clínico
+            </Link>
+            <Link 
+              href="#espaco" 
+              className="text-lg font-medium text-deepnavy hover:text-drygold transition-colors"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              O Espaço
+            </Link>
+          </nav>
+          <div className="px-6 pb-8">
+            <a 
+              href="https://api.whatsapp.com/send/?phone=5541997742133&text=Ol%C3%A1%2C+gostaria+de+informa%C3%A7%C3%B5es+sobre+atendimento+na+Cl%C3%ADnica+RECRIAR&type=phone_number&app_absent=0" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              onClick={() => {
+                trackWhatsAppClick();
+                setIsMobileMenuOpen(false);
+              }}
+              className="block w-full bg-deepnavy hover:bg-leadgray text-offwhite px-6 py-4 text-center text-sm font-medium transition-colors"
+            >
+              Solicitar Agendamento
+            </a>
+          </div>
+        </div>
+      )}
     </header>
   );
 }
