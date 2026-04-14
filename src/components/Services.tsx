@@ -2,7 +2,7 @@ import { Brain, User, Users } from "lucide-react";
 
 export function Services() {
   return (
-    <section id="especialidades" className="py-24 bg-deepnavy text-offwhite scroll-mt-28 md:scroll-mt-32">
+    <section id="especialidades" className="py-24 bg-deepnavy text-offwhite scroll-mt-[90px]">
       <div className="container mx-auto px-6">
         <div className="max-w-3xl mb-16">
           <span className="uppercase tracking-widest text-drygold text-xs font-semibold mb-4 block">

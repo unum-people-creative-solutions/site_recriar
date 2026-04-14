@@ -4,8 +4,8 @@ import { ArrowRight } from "lucide-react";
 
 export function Hero() {
   const trackWhatsAppClick = () => {
-    if (typeof window !== "undefined" && (window as any).gtag) {
-      (window as any).gtag('event', 'conversion', {
+    if (typeof window !== "undefined" && window.gtag) {
+      window.gtag('event', 'conversion', {
         'send_to': 'AW-18082531759/MOw4CLnhqJocEK-Ttq5D',
         'value': 1.0,
         'currency': 'BRL'
