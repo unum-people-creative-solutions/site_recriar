@@ -39,7 +39,7 @@ export function Team() {
               <div className="aspect-square w-full bg-leadgray/5 mb-6 overflow-hidden flex items-center justify-center relative">
                 <Image
                   src={member.image}
-                  alt={`Retrato de ${member.name}`}
+                  alt={`${member.role} ${member.name} - Clínica Recriar Curitiba`}
                   fill
                   className="object-cover object-top transition-transform duration-500 group-hover:scale-105"
                 />

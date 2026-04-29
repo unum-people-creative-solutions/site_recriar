@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { useLead } from "@/context/LeadContext";
 
 const InstagramIcon = ({ className }: { className?: string }) => (
   <svg
@@ -37,14 +38,12 @@ const WhatsAppIcon = ({ className }: { className?: string }) => (
 );
 
 export function Footer() {
-  const trackWhatsAppClick = () => {
-    if (typeof window !== "undefined" && window.gtag) {
-      window.gtag('event', 'conversion', {
-        'send_to': 'AW-18082531759/MOw4CLnhqJocEK-Ttq5D',
-        'value': 1.0,
-        'currency': 'BRL'
-      });
-    }
+  const { openModal } = useLead();
+  const WHATSAPP_URL = "https://api.whatsapp.com/send/?phone=5541997742133&text=Olá, gostaria de informações sobre atendimento na Clínica RECRIAR&type=phone_number&app_absent=0";
+
+  const handleContactClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    openModal(WHATSAPP_URL);
   };
 
   return (
@@ -69,16 +68,13 @@ export function Footer() {
 
           <div className="flex flex-col gap-4">
             <h4 className="text-white uppercase tracking-widest text-xs font-semibold mb-2">Contato</h4>
-            <a 
-              href="https://api.whatsapp.com/send/?phone=5541997742133&text=Ol%C3%A1%2C+gostaria+de+informa%C3%A7%C3%B5es+sobre+atendimento+na+Cl%C3%ADnica+RECRIAR&type=phone_number&app_absent=0" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              onClick={trackWhatsAppClick}
+            <button 
+              onClick={handleContactClick}
               className="flex items-center gap-2 text-sm hover:text-white transition-colors"
             >
               <WhatsAppIcon className="w-4 h-4" />
               +55 41 99774-2133
-            </a>
+            </button>
           </div>
 
           <div className="flex flex-col gap-4">
