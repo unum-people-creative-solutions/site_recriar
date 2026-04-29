@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { MapPin, Shield, VolumeX } from "lucide-react";
+import { MapPin, Shield } from "lucide-react";
 
 export function Space() {
   return (
@@ -8,7 +8,7 @@ export function Space() {
         <div className="order-2 lg:order-1 relative h-[350px] sm:h-[400px] lg:h-[500px] w-[calc(100%+3rem)] -ml-6 lg:w-full lg:ml-0 bg-leadgray/5">
           <Image
             src="/sala.png"
-            alt="Imagem do Consultório"
+            alt="Consultório de Psicologia Clínica Recriar - Centro Cívico Curitiba"
             fill
             className="object-cover"
           />

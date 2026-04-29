@@ -1,36 +1,59 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Centro Recriar - Clínica de Psicologia e Saúde
 
-## Getting Started
+Site institucional de alto padrão para a **Clínica Recriar**, localizada em Curitiba. Focado em conversão para avaliações neuropsicológicas e psicoterapia especializada.
 
-First, run the development server:
+## 🚀 Tecnologias
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- **Framework**: [Next.js 15+](https://nextjs.org/) (App Router)
+- **Linguagem**: [TypeScript](https://www.typescriptlang.org/)
+- **Estilização**: [Tailwind CSS 4](https://tailwindcss.com/)
+- **Ícones**: [Lucide React](https://lucide.dev/)
+- **Animações**: Tailwind Animations & Transições nativas
+
+## 🎯 Funcionalidades Principais
+
+- **SEO Avançado**:
+  - Metadados dinâmicos e tags OpenGraph/Twitter.
+  - Dados estruturados JSON-LD (MedicalBusiness) para SEO Local.
+  - Geração automática de `sitemap.xml` e `robots.txt`.
+- **Captura de Leads (CRM Integration)**:
+  - Interceptação de todos os links de WhatsApp por um Modal de Pré-Agendamento.
+  - Coleta de Nome, E-mail e Telefone.
+  - Rastreamento automático de origem (UTMs, GCLID, FBCLID, Referrer).
+  - Integração via API Gateway para ingestão de leads no CRM.
+- **Rastreamento de Conversões**:
+  - Integração nativa com Google Ads (Gtag).
+  - Disparo de eventos de conversão no momento da submissão do formulário.
+- **Interface Premium**:
+  - Design minimalista e sofisticado.
+  - Responsividade total.
+  - Menu flutuante e scroll suave.
+
+## 🛠️ Configuração
+
+### Variáveis de Ambiente
+
+Crie um arquivo `.env.local` na raiz com as seguintes chaves:
+
+```env
+NEXT_PUBLIC_API_GATEWAY_URL=https://seu-api-gateway.com
+NEXT_PUBLIC_API_KEY=sua_chave_de_api_aqui
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Desenvolvimento
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm install
+npm run dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 📂 Estrutura de Pastas
 
-## Learn More
+- `src/app`: Rotas e layouts da aplicação.
+- `src/components`: Componentes de interface (Hero, Services, Team, LeadModal, etc).
+- `src/context`: Gerenciamento de estado (LeadContext).
+- `src/lib`: Lógica de integração e utilitários (CRM API).
+- `public`: Ativos estáticos (Logos e Imagens da Clínica).
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+Desenvolvido com foco em performance, acessibilidade e conversão.
