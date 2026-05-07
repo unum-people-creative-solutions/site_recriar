@@ -1,29 +1,28 @@
 export interface LeadData {
   nome: string;
-  email: string;
+  email?: string;
   telefone: string;
-  origem: string;
-  metadados: {
+  origem?: string;
+  gclid?: string | null;
+  utm_source?: string | null;
+  utm_medium?: string | null;
+  utm_campaign?: string | null;
+  metadados?: {
     url_conversao: string;
     data_hora: string;
   };
 }
 
 export async function sendLeadToCRM(data: LeadData) {
-  const url = `${process.env.NEXT_PUBLIC_API_GATEWAY_URL}/ingest`;
+  const url = process.env.NEXT_PUBLIC_API_GATEWAY_URL || "https://api.unumpeople.com.br/ingest";
   const apiKey = process.env.NEXT_PUBLIC_API_KEY;
-
-  if (!process.env.NEXT_PUBLIC_API_GATEWAY_URL) {
-    console.warn("CRM API URL not configured.");
-    return;
-  }
 
   try {
     const response = await fetch(url, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "x-api-key": apiKey || "",
+        "X-API-Key": apiKey || "",
       },
       body: JSON.stringify(data),
     });
