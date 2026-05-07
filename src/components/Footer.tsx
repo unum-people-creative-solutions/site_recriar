@@ -109,9 +109,28 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs font-light">
+        <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row items-center justify-between gap-6 text-xs font-light">
           <p suppressHydrationWarning>© {new Date().getFullYear()} Recriar Psicologia. Todos os direitos reservados.</p>
-          <p>Design de Alto Padrão</p>
+          
+          <a 
+            href="https://unumpeople.com.br" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="flex flex-col md:flex-row items-center gap-2 md:gap-3 grayscale opacity-40 hover:grayscale-0 hover:opacity-100 transition-all group"
+          >
+            <span className="text-[10px] uppercase tracking-widest font-bold text-white/40 group-hover:text-deepnavy transition-colors">Desenvolvido por</span>
+            <div className="flex items-center gap-2">
+              <div className="relative h-5 w-5">
+                <Image
+                  src="/images/logo_unum.png"
+                  alt="Logo Unum People"
+                  fill
+                  className="object-contain"
+                />
+              </div>
+              <span className="text-xs font-bold text-white/40 group-hover:text-deepnavy tracking-tight transition-colors">Unum People Creative Solutions</span>
+            </div>
+          </a>
         </div>
       </div>
     </footer>
