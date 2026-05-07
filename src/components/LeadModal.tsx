@@ -24,40 +24,19 @@ export function LeadModal() {
 
   if (!isOpen) return null;
 
-  const getSourceInfo = () => {
-    if (typeof window === "undefined") return "Direct";
-
-    const urlParams = new URLSearchParams(window.location.search);
-    const utms = [
-      urlParams.get("utm_source") && "Source: " + urlParams.get("utm_source"),
-      urlParams.get("utm_medium") && "Medium: " + urlParams.get("utm_medium"),
-      urlParams.get("utm_campaign") && "Campaign: " + urlParams.get("utm_campaign"),
-      urlParams.get("gclid") && "GCLID: " + urlParams.get("gclid"),
-      urlParams.get("fbclid") && "FBCLID: " + urlParams.get("fbclid"),
-    ].filter(Boolean);
-
-    if (utms.length > 0) return utms.join(" | ");
-
-    const referrer = document.referrer;
-    if (referrer) {
-      try {
-        const refHost = new URL(referrer).hostname;
-        return "Referrer: " + refHost;
-      } catch {
-        return "Referrer: " + referrer;
-      }
-    }
-
-    return "Direto / Orgânico";
-  };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
 
+    const urlParams = new URLSearchParams(window.location.search);
+    
     const leadData: LeadData = {
       ...formData,
-      origem: getSourceInfo(),
+      origem: window.location.hostname,
+      gclid: urlParams.get("gclid"),
+      utm_source: urlParams.get("utm_source"),
+      utm_medium: urlParams.get("utm_medium"),
+      utm_campaign: urlParams.get("utm_campaign"),
       metadados: {
         url_conversao: whatsappUrl,
         data_hora: new Date().toISOString(),
