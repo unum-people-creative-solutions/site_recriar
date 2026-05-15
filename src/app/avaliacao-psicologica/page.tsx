@@ -52,34 +52,25 @@ const LPHeader = () => {
 
 const LPSimplifiedFooter = () => {
   return (
-    <footer className="bg-leadgray text-white/40 py-8 border-t border-white/5">
-      <div className="container mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6 text-[10px] uppercase tracking-[0.2em] font-light">
+    <footer className="bg-leadgray text-white/40 py-10 border-t border-white/5">
+      <div className="container mx-auto px-6 flex flex-col items-center justify-center gap-6 text-[10px] uppercase tracking-[0.2em] font-light text-center">
+        <div className="flex flex-col md:flex-row gap-4 md:gap-8 opacity-60 mb-2">
+          <span>Curitiba - PR</span>
+          <span>Neuropsicologia de Alta Precisão</span>
+        </div>
+
         <p suppressHydrationWarning>© {new Date().getFullYear()} Recriar Psicologia e Saúde. Todos os direitos reservados.</p>
         
         <a 
           href="https://unumpeople.com.br" 
           target="_blank" 
           rel="noopener noreferrer"
-          className="flex flex-col md:flex-row items-center gap-2 md:gap-3 grayscale opacity-40 hover:grayscale-0 hover:opacity-100 transition-all group"
+          className="group"
         >
-          <span className="font-bold group-hover:text-offwhite transition-colors">Desenvolvido por</span>
-          <div className="flex items-center gap-2">
-            <div className="relative h-4 w-4">
-              <Image
-                src="/images/logo_unum.png"
-                alt="Logo Unum People"
-                fill
-                className="object-contain"
-              />
-            </div>
-            <span className="font-bold tracking-tight group-hover:text-offwhite transition-colors">Unum People Creative Solutions</span>
-          </div>
+          <span className="text-white/20 group-hover:text-white/50 transition-colors">
+            Desenvolvido por <span className="font-bold tracking-tight text-white/40">Unum People Creative Solutions</span>
+          </span>
         </a>
-
-        <div className="flex gap-8">
-          <span>Curitiba - PR</span>
-          <span>Neuropsicologia de Alta Precisão</span>
-        </div>
       </div>
     </footer>
   );
@@ -152,7 +143,7 @@ const PainSection = () => {
               O desgaste emocional e financeiro de intervenções baseadas em suposições pode ser devastador. Laudos superficiais e diagnósticos genéricos não apenas desperdiçam tempo precioso, mas podem mascarar necessidades reais de desenvolvimento.
             </p>
             <p className="text-lg text-leadgray/70 leading-relaxed font-light">
-              Na Clínica Recriar, recusamos o "talvez". Oferecemos a precisão necessária para que pais, médicos e pacientes possam traçar estratégias de intervenção seguras, interrompendo o ciclo de incertezas.
+              Na Clínica Recriar, recusamos o &quot;talvez&quot;. Oferecemos a precisão necessária para que pais, médicos e pacientes possam traçar estratégias de intervenção seguras, interrompendo o ciclo de incertezas.
             </p>
           </div>
         </div>

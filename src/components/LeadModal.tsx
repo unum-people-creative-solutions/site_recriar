@@ -1,17 +1,49 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import { useForm, Controller } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
+import { IMaskInput } from "react-imask";
 import { useLead } from "@/context/LeadContext";
 import { sendLeadToCRM, LeadData } from "@/lib/crm";
-import { X, Send, Loader2, User, Mail, Phone } from "lucide-react";
+import { X, Send, Loader2, User, Mail, Phone, AlertCircle } from "lucide-react";
+
+const leadSchema = z.object({
+  nome: z.string().min(3, "O nome deve ter pelo menos 3 caracteres"),
+  email: z.string().email("E-mail inválido"),
+  telefone: z.string().min(14, "Telefone incompleto"), // (00) 0000-0000 ou (00) 00000-0000
+});
+
+type LeadFormValues = z.infer<typeof leadSchema>;
+
+declare global {
+  interface Window {
+    gtag?: (
+      command: "config" | "event" | "set" | "js",
+      targetId: string,
+      config?: Record<string, unknown>
+    ) => void;
+  }
+}
 
 export function LeadModal() {
   const { isOpen, closeModal, whatsappUrl } = useLead();
   const [isLoading, setIsLoading] = useState(false);
-  const [formData, setFormData] = useState({
-    nome: "",
-    email: "",
-    telefone: "",
+
+  const {
+    register,
+    handleSubmit,
+    control,
+    reset,
+    formState: { errors },
+  } = useForm<LeadFormValues>({
+    resolver: zodResolver(leadSchema),
+    defaultValues: {
+      nome: "",
+      email: "",
+      telefone: "",
+    },
   });
 
   useEffect(() => {
@@ -19,19 +51,19 @@ export function LeadModal() {
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "unset";
+      reset();
     }
-  }, [isOpen]);
+  }, [isOpen, reset]);
 
   if (!isOpen) return null;
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const onSubmit = async (data: LeadFormValues) => {
     setIsLoading(true);
 
     const urlParams = new URLSearchParams(window.location.search);
     
     const leadData: LeadData = {
-      ...formData,
+      ...data,
       origem: window.location.hostname,
       gclid: urlParams.get("gclid"),
       utm_source: urlParams.get("utm_source"),
@@ -44,31 +76,34 @@ export function LeadModal() {
     };
 
     try {
-      // 1. Tenta enviar para o CRM (em um bloco try/catch isolado)
+      // 1. Tenta enviar para o CRM
       try {
         await sendLeadToCRM(leadData);
       } catch (crmError) {
-        // Loga o erro mas permite que o código continue para o rastreio e redirect
         console.error("Erro ao enviar para o CRM:", crmError);
       }
 
-      // 2. Tenta registrar a conversão no Google Ads (mesmo se o CRM falhar)
-      if (typeof window !== "undefined" && (window as any).gtag) {
-        (window as any).gtag("event", "conversion", {
+      // 2. Tenta registrar a conversão no Google Ads
+      if (typeof window !== "undefined" && window.gtag) {
+        // Envia dados do usuário para Enhanced Conversions
+        window.gtag('set', 'user_data', {
+          'email': data.email,
+          'phone_number': data.telefone
+        });
+
+        window.gtag("event", "conversion", {
           "send_to": "AW-18082531759/MOw4CLnhqJocEK-Ttq5D",
           "value": 1.0,
           "currency": "BRL"
         });
       }
     } catch (error) {
-      // Catch genérico para evitar crash total caso o gtag ou algo fora do CRM falhe
       console.error("Falha ao processar lead:", error);
     } finally {
       // 3. Sempre redireciona para o WhatsApp e fecha o modal
       window.open(whatsappUrl, "_blank", "noopener,noreferrer");
 
       closeModal();
-      setFormData({ nome: "", email: "", telefone: "" });
       setIsLoading(false);
     }
   };
@@ -91,7 +126,7 @@ export function LeadModal() {
           </button>
         </div>
 
-        <form onSubmit={handleSubmit} className="p-8 flex flex-col gap-6">
+        <form onSubmit={handleSubmit(onSubmit)} className="p-8 flex flex-col gap-6">
           <div className="space-y-4">
             <div className="relative">
               <label className="text-xs uppercase tracking-wider text-gray-500 font-semibold mb-1.5 block">
@@ -100,14 +135,17 @@ export function LeadModal() {
               <div className="relative">
                 <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#C5A059]" />
                 <input
-                  required
+                  {...register("nome")}
                   type="text"
                   placeholder="Seu nome completo"
-                  value={formData.nome}
-                  onChange={(e) => setFormData({ ...formData, nome: e.target.value })}
-                  className="w-full bg-gray-50 border border-gray-200 rounded-sm py-3 pl-10 pr-4 text-sm focus:outline-none focus:border-[#C5A059] transition-colors"
+                  className={`w-full bg-gray-50 border ${errors.nome ? 'border-red-500' : 'border-gray-200'} rounded-sm py-3 pl-10 pr-4 text-sm focus:outline-none focus:border-[#C5A059] transition-colors`}
                 />
               </div>
+              {errors.nome && (
+                <span className="text-[10px] text-red-500 mt-1 flex items-center gap-1">
+                  <AlertCircle className="w-3 h-3" /> {errors.nome.message}
+                </span>
+              )}
             </div>
 
             <div className="relative">
@@ -116,15 +154,27 @@ export function LeadModal() {
               </label>
               <div className="relative">
                 <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#C5A059]" />
-                <input
-                  required
-                  type="tel"
-                  placeholder="(00) 00000-0000"
-                  value={formData.telefone}
-                  onChange={(e) => setFormData({ ...formData, telefone: e.target.value })}
-                  className="w-full bg-gray-50 border border-gray-200 rounded-sm py-3 pl-10 pr-4 text-sm focus:outline-none focus:border-[#C5A059] transition-colors"
+                <Controller
+                  name="telefone"
+                  control={control}
+                  render={({ field }) => (
+                    <IMaskInput
+                      mask="(00) 00000-0000"
+                      lazy={true}
+                      value={field.value}
+                      unmask={false} // Mantemos formatado para o CRM/Ads conforme padrão atual
+                      onAccept={(value) => field.onChange(value)}
+                      placeholder="(00) 00000-0000"
+                      className={`w-full bg-gray-50 border ${errors.telefone ? 'border-red-500' : 'border-gray-200'} rounded-sm py-3 pl-10 pr-4 text-sm focus:outline-none focus:border-[#C5A059] transition-colors`}
+                    />
+                  )}
                 />
               </div>
+              {errors.telefone && (
+                <span className="text-[10px] text-red-500 mt-1 flex items-center gap-1">
+                  <AlertCircle className="w-3 h-3" /> {errors.telefone.message}
+                </span>
+              )}
             </div>
 
             <div className="relative">
@@ -134,14 +184,17 @@ export function LeadModal() {
               <div className="relative">
                 <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#C5A059]" />
                 <input
-                  required
+                  {...register("email")}
                   type="email"
                   placeholder="seu@email.com"
-                  value={formData.email}
-                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  className="w-full bg-gray-50 border border-gray-200 rounded-sm py-3 pl-10 pr-4 text-sm focus:outline-none focus:border-[#C5A059] transition-colors"
+                  className={`w-full bg-gray-50 border ${errors.email ? 'border-red-500' : 'border-gray-200'} rounded-sm py-3 pl-10 pr-4 text-sm focus:outline-none focus:border-[#C5A059] transition-colors`}
                 />
               </div>
+              {errors.email && (
+                <span className="text-[10px] text-red-500 mt-1 flex items-center gap-1">
+                  <AlertCircle className="w-3 h-3" /> {errors.email.message}
+                </span>
+              )}
             </div>
           </div>
 
