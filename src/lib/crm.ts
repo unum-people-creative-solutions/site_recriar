@@ -14,7 +14,8 @@ export interface LeadData {
 }
 
 export async function sendLeadToCRM(data: LeadData) {
-  const url = process.env.NEXT_PUBLIC_API_GATEWAY_URL || "https://api.unumpeople.com.br/ingest";
+  const baseUrl = process.env.NEXT_PUBLIC_API_GATEWAY_URL || "https://api.unumpeople.com.br";
+  const url = `${baseUrl}/ingest`;
   const apiKey = process.env.NEXT_PUBLIC_API_KEY;
 
   try {
