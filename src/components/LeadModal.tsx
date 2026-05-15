@@ -44,8 +44,15 @@ export function LeadModal() {
     };
 
     try {
-      await sendLeadToCRM(leadData);
+      // 1. Tenta enviar para o CRM (em um bloco try/catch isolado)
+      try {
+        await sendLeadToCRM(leadData);
+      } catch (crmError) {
+        // Loga o erro mas permite que o código continue para o rastreio e redirect
+        console.error("Erro ao enviar para o CRM:", crmError);
+      }
 
+      // 2. Tenta registrar a conversão no Google Ads (mesmo se o CRM falhar)
       if (typeof window !== "undefined" && (window as any).gtag) {
         (window as any).gtag("event", "conversion", {
           "send_to": "AW-18082531759/MOw4CLnhqJocEK-Ttq5D",
@@ -54,11 +61,12 @@ export function LeadModal() {
         });
       }
     } catch (error) {
+      // Catch genérico para evitar crash total caso o gtag ou algo fora do CRM falhe
       console.error("Falha ao processar lead:", error);
     } finally {
-      // Abre o WhatsApp mesmo se houver erro na API
+      // 3. Sempre redireciona para o WhatsApp e fecha o modal
       window.open(whatsappUrl, "_blank", "noopener,noreferrer");
-      
+
       closeModal();
       setFormData({ nome: "", email: "", telefone: "" });
       setIsLoading(false);
