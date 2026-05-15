@@ -128,7 +128,34 @@ export default function RootLayout({
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag("js", new Date());
-            gtag("config", "AW-18082531759");
+            gtag("config", "AW-18082531759", {
+              'allow_enhanced_conversions': true
+            });
+
+            // Função global para reportar conversões de forma padronizada
+            window.gtag_report_conversion = function(url, userData) {
+              const callback = function () {
+                if (typeof(url) != 'undefined' && url !== null) {
+                  window.open(url, '_blank', 'noopener,noreferrer');
+                }
+              };
+              
+              const conversionData = {
+                'send_to': 'AW-18082531759/MOw4CLnhqJocEK-Ttq5D',
+                'event_callback': callback
+              };
+
+              // Enhanced Conversions - Envia dados do usuário se disponíveis
+              if (userData) {
+                gtag('set', 'user_data', {
+                  'email': userData.email,
+                  'phone_number': userData.phone
+                });
+              }
+
+              gtag('event', 'conversion', conversionData);
+              return false;
+            };
           `}
         </Script>
         <LeadProvider>
