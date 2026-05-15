@@ -53,15 +53,14 @@ export function LeadModal() {
           "currency": "BRL"
         });
       }
-
+    } catch (error) {
+      console.error("Falha ao processar lead:", error);
+    } finally {
+      // Abre o WhatsApp mesmo se houver erro na API
       window.open(whatsappUrl, "_blank", "noopener,noreferrer");
       
       closeModal();
       setFormData({ nome: "", email: "", telefone: "" });
-    } catch (error) {
-      console.error("Falha ao processar lead:", error);
-      alert("Ocorreu um erro ao processar sua solicitação. Por favor, tente novamente.");
-    } finally {
       setIsLoading(false);
     }
   };
